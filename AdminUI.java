@@ -1,0 +1,1446 @@
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+/**
+ * @author 98990
+ */
+public class AdminUI extends javax.swing.JFrame {
+
+    MobileCompany company;
+    Login login;
+
+    /**
+     * Creates new form AdminUI
+     *
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
+    public AdminUI(Login login) throws IOException, ClassNotFoundException, PlanException {
+        this.login = login;
+        test();
+        initComponents();
+        //company = MobileCompany.load();
+    }
+
+    public void test() throws PlanException {
+        //mobileCompany = new MobileCompany("HoomanCompany", "admin", "admin", 12);
+
+        MobilePhone mobilePhone = new MobilePhone("Galaxy S10", MobileType.Android, 8, 500);
+        MobilePhone mobilePhone1 = new MobilePhone("Iphone X", MobileType.IOS, 4, 500);
+        MobilePhone mobilePhone2 = new MobilePhone("LG S50", MobileType.Windows, 16, 500);
+
+        //Initialize plan objects
+        MobilePlan plan0 = createPersonalPlan("OP123", 133, mobilePhone, 120, 22, new MyDate(2000, 5, 14), "Wollongong");
+        MobilePlan plan1 = createPersonalPlan("Sara12", 345, mobilePhone, 30, 38, new MyDate(1999, 4, 34), "Sydney");
+        MobilePlan plan2 = createPersonalPlan("John342", 435, mobilePhone1, 100, 20, new MyDate(2004, 3, 23), "Dubbo");
+        MobilePlan plan3 = createBusinessPlan("Alex123", 679, mobilePhone1, 50, 80, new MyDate(2020, 6, 21), 20, 123568);
+        MobilePlan plan4 = createBusinessPlan("Gh546", 356, mobilePhone2, 20, 30, new MyDate(2021, 7, 29), 10, 666555);
+        MobilePlan plan5 = createBusinessPlan("S9845", 457, mobilePhone2, 200, 46, new MyDate(2024, 2, 17), 200, 222333);
+
+        User user0 = new User(143543, "John Smith", new Address(12, "Princs Hwy", "Fairy Meadow", "Wollongong"), "password1");
+        User user1 = new User(265756, "Sara Lawson", new Address(43, "Illawara Avenue", "Gwynneville", "Wollongong"), "password1");
+        User user2 = new User(387899, "Robert London", new Address(22, "Edward st", "Coniston", "Wollongong"), "123");
+        User user3 = new User(489123, "Alex Niton", new Address(330, "Smith st", "Liverpool", "Sydney"), "12345");
+        User user4 = new User(565768, "Joe Tomson", new Address(20, "Rose st", "North Sydney", "Sydney"), "123");
+        User user5 = new User(676767, "Allison Bird", new Address(41, "Grey st", "Monavale", "Melbourne"), "password123");
+
+        company = new MobileCompany("Rokham", "tra", "1234", 1);
+        company.addUser(user0);
+        company.addUser(user1);
+        company.addUser(user2);
+        company.addUser(user4);
+        company.addUser(user5);
+        company.addUser(user3);
+
+        UITools.addPlan(user1, plan1);
+        UITools.addPlan(user2, plan3);
+        UITools.addPlan(user2, plan2);
+        UITools.addPlan(user3, plan0);
+        UITools.addPlan(user3, plan5);
+        UITools.addPlan(user3, plan1);
+        UITools.addPlan(user1, plan4);
+        UITools.addPlan(user5, plan4);
+        UITools.addPlan(user5, plan1);
+        UITools.addPlan(user4, plan4);
+        UITools.addPlan(user2, plan4);
+        UITools.addPlan(user0, plan4);
+        UITools.addPlan(user0, plan5);
+    }
+
+    public static PersonalPlan createPersonalPlan(String userName, int id, MobilePhone handset, int internetQuota, int capLimit, MyDate expiryDate, String city) throws PlanException {
+        PersonalPlan plan0;
+        try {
+            plan0 = new PersonalPlan(userName, id, handset, internetQuota, capLimit, expiryDate, city);
+        } catch (PlanException e) {
+            plan0 = new PersonalPlan(userName, e.getNewId(), handset, internetQuota, capLimit, expiryDate, city);
+            System.out.println(e);
+        }
+        return plan0;
+    }
+
+    public static BusinessPlan createBusinessPlan(String userName, int id, MobilePhone handset, int internetQuota, int capLimit, MyDate expiryDate, int numberOfEmployees, int ABN) throws PlanException {
+        BusinessPlan plan;
+        try {
+            plan = new BusinessPlan(userName, id, handset, internetQuota, capLimit, expiryDate, numberOfEmployees, ABN);
+        } catch (PlanException e) {
+            plan = new BusinessPlan(userName, e.getNewId(), handset, internetQuota, capLimit, expiryDate, numberOfEmployees, ABN);
+            System.out.println(e);
+        }
+        return plan;
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        ReportTab = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        companyLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        companyTextArea = new javax.swing.JTextArea();
+        reportButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        userText = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        userArea = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        userCombo = new javax.swing.JComboBox<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        userArea1 = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        userTable = new javax.swing.JTable();
+        nameSortCheckBox = new javax.swing.JCheckBox();
+        monthlypaymentSortCheckBox = new javax.swing.JCheckBox();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        cityTable = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        modelpayTable = new javax.swing.JTable();
+        jPanel9 = new javax.swing.JPanel();
+        personalPlanRadioButton = new javax.swing.JRadioButton();
+        businessPlanRadioButton = new javax.swing.JRadioButton();
+        planIdLabel = new javax.swing.JLabel();
+        usernameLabel = new javax.swing.JLabel();
+        mobilePhoneLabel = new javax.swing.JLabel();
+        modelLabel = new javax.swing.JLabel();
+        planIDTextField = new javax.swing.JTextField();
+        usernameTextField = new javax.swing.JTextField();
+        modelTextField = new javax.swing.JTextField();
+        osTypeLabel = new javax.swing.JLabel();
+        osTypeComboBox = new javax.swing.JComboBox<>();
+        memorySizeTextField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        priceTextField = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        internetQuotaTextField = new javax.swing.JTextField();
+        expLabel = new javax.swing.JLabel();
+        dayLabel = new javax.swing.JLabel();
+        dayTextField = new javax.swing.JTextField();
+        monthTextField = new javax.swing.JTextField();
+        yearTextField = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        cityOrABNLabel = new javax.swing.JLabel();
+        cityOrABNTextField = new javax.swing.JTextField();
+        addButton = new javax.swing.JButton();
+        clearButton = new javax.swing.JButton();
+        noEmployeesLabel = new javax.swing.JLabel();
+        numOfEmployeesTextField = new javax.swing.JTextField();
+        capLimitTextField = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        userIDText = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        updateButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        planTable = new javax.swing.JTable();
+        userCombo1 = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        mobilemodelTextField = new javax.swing.JTextField();
+        expTextField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        filterButton = new javax.swing.JButton();
+        sortCheckBox = new javax.swing.JCheckBox();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        logoutBar = new javax.swing.JMenu();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        ReportTab.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                ReportTabStateChanged(evt);
+            }
+        });
+
+        companyLabel.setText("Report for");
+
+        companyTextArea.setColumns(20);
+        companyTextArea.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        companyTextArea.setRows(5);
+        jScrollPane1.setViewportView(companyTextArea);
+
+        reportButton.setText("Report");
+        reportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(reportButton)
+                .addGap(82, 82, 82)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(companyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(188, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(companyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reportButton))
+                .addContainerGap(127, Short.MAX_VALUE))
+        );
+
+        ReportTab.addTab("Report", jPanel1);
+
+        jButton1.setText("Find");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        userArea.setColumns(20);
+        userArea.setRows(5);
+        jScrollPane2.setViewportView(userArea);
+
+        jLabel3.setText("Enter ID Below: ");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(userText, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1))
+                            .addComponent(jLabel3))
+                        .addGap(0, 602, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(userText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(150, Short.MAX_VALUE))
+        );
+
+        ReportTab.addTab("Find User", jPanel2);
+
+        userCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                userComboItemStateChanged(evt);
+            }
+        });
+
+        userArea1.setColumns(20);
+        userArea1.setRows(5);
+        jScrollPane3.setViewportView(userArea1);
+
+        jLabel1.setText("Users");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(userCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(216, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(userCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(144, Short.MAX_VALUE))
+        );
+
+        ReportTab.addTab("User Report", jPanel3);
+
+        userTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        userTable.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                userTableAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane4.setViewportView(userTable);
+
+        nameSortCheckBox.setText("sort by name");
+        nameSortCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameSortCheckBoxActionPerformed(evt);
+            }
+        });
+
+        monthlypaymentSortCheckBox.setText("sort by monthly payment");
+        monthlypaymentSortCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthlypaymentSortCheckBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameSortCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(monthlypaymentSortCheckBox))
+                .addContainerGap(89, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(nameSortCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(monthlypaymentSortCheckBox)
+                .addContainerGap(77, Short.MAX_VALUE))
+        );
+
+        ReportTab.addTab("Monthly Payments", jPanel4);
+
+        cityTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        cityTable.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                cityTableAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane6.setViewportView(cityTable);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 727, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(230, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(119, Short.MAX_VALUE))
+        );
+
+        ReportTab.addTab("City Payents", jPanel5);
+
+        modelpayTable.setBackground(new java.awt.Color(255, 204, 204));
+        modelpayTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        modelpayTable.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                modelpayTableAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane7.setViewportView(modelpayTable);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 742, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(218, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(132, Short.MAX_VALUE))
+        );
+
+        ReportTab.addTab("Report Model Payment", jPanel7);
+
+        buttonGroup1.add(personalPlanRadioButton);
+        personalPlanRadioButton.setSelected(true);
+        personalPlanRadioButton.setText("Personal Plan");
+        personalPlanRadioButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                personalPlanRadioButtonStateChanged(evt);
+            }
+        });
+
+        buttonGroup1.add(businessPlanRadioButton);
+        businessPlanRadioButton.setText("Business Plan");
+
+        planIdLabel.setText("Plan ID");
+
+        usernameLabel.setText("Username");
+
+        mobilePhoneLabel.setText("Mobile Phone ________________________________________________________________________________________");
+
+        modelLabel.setText("Model");
+
+        planIDTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                planIDTextFieldActionPerformed(evt);
+            }
+        });
+
+        osTypeLabel.setText("OS Type");
+
+        osTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        osTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                osTypeComboBoxActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Memory Size");
+
+        jLabel5.setText("Price");
+
+        jLabel8.setText("Internet Quota");
+
+        expLabel.setText("EXP Date ________________________________________________________________________________________");
+
+        dayLabel.setText("Day");
+
+        jLabel9.setText("Month");
+
+        jLabel10.setText("Year");
+
+        cityOrABNLabel.setText("City");
+
+        addButton.setForeground(new java.awt.Color(255, 0, 102));
+        addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        clearButton.setForeground(new java.awt.Color(255, 0, 102));
+        clearButton.setText("CLEAR");
+        clearButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                clearButtonStateChanged(evt);
+            }
+        });
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
+
+        noEmployeesLabel.setText("NO. Of Employees");
+
+        jLabel11.setText("Cap Limit");
+
+        jLabel12.setText("Enter User ID To Add Plan:");
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(mobilePhoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 372, Short.MAX_VALUE))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(expLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(planIdLabel)
+                                    .addComponent(usernameLabel)
+                                    .addComponent(modelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(osTypeLabel)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel8)
+                                    .addComponent(dayLabel)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(cityOrABNLabel)
+                                    .addComponent(noEmployeesLabel)
+                                    .addComponent(jLabel11))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(capLimitTextField)
+                                    .addComponent(numOfEmployeesTextField)
+                                    .addComponent(yearTextField)
+                                    .addComponent(monthTextField)
+                                    .addComponent(memorySizeTextField)
+                                    .addComponent(planIDTextField)
+                                    .addComponent(usernameTextField)
+                                    .addComponent(modelTextField)
+                                    .addComponent(osTypeComboBox, 0, 110, Short.MAX_VALUE)
+                                    .addComponent(priceTextField)
+                                    .addComponent(internetQuotaTextField)
+                                    .addComponent(dayTextField)
+                                    .addComponent(cityOrABNTextField))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(clearButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(181, 181, 181))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(userIDText)
+                                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(162, 162, 162))))))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(personalPlanRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(businessPlanRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(81, 81, 81))))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(personalPlanRadioButton)
+                    .addComponent(businessPlanRadioButton))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(planIdLabel)
+                            .addComponent(planIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(usernameLabel)
+                            .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(mobilePhoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(modelLabel)
+                            .addComponent(modelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(osTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(osTypeLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(memorySizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(internetQuotaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(capLimitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addGap(4, 4, 4)
+                        .addComponent(expLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dayLabel)
+                            .addComponent(dayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(userIDText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(monthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(clearButton)))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(yearTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(addButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cityOrABNLabel)
+                    .addComponent(cityOrABNTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(noEmployeesLabel)
+                    .addComponent(numOfEmployeesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+
+        ReportTab.addTab("Add Plan", jPanel9);
+
+        updateButton.setText("UPDATE");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setText("DELETE");
+        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
+            }
+        });
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        planTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        planTable.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                planTableAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        planTable.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                planTableFocusGained(evt);
+            }
+        });
+        planTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                planTableMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                planTableMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                planTableMouseReleased(evt);
+            }
+        });
+        jScrollPane5.setViewportView(planTable);
+
+        userCombo1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                userCombo1ItemStateChanged(evt);
+            }
+        });
+        userCombo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userCombo1ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Users");
+
+        mobilemodelTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mobilemodelTextFieldActionPerformed(evt);
+            }
+        });
+        mobilemodelTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                mobilemodelTextFieldKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                mobilemodelTextFieldKeyTyped(evt);
+            }
+        });
+
+        expTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                expTextFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("EXP Date");
+
+        jLabel6.setText("Mobile Model");
+
+        filterButton.setText("Filter By Date");
+        filterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filterButtonActionPerformed(evt);
+            }
+        });
+
+        sortCheckBox.setText("Sort By Username");
+        sortCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortCheckBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addComponent(deleteButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(updateButton)
+                                .addGap(77, 77, 77)
+                                .addComponent(jLabel6))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(expTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)
+                                .addComponent(filterButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(sortCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(mobilemodelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(userCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(285, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(userCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(deleteButton)
+                            .addComponent(updateButton))
+                        .addGap(13, 13, 13))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel6))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(mobilemodelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(filterButton)
+                            .addComponent(sortCheckBox)
+                            .addComponent(expTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
+        );
+
+        ReportTab.addTab("Plans Info", jPanel6);
+
+        logoutBar.setText("Logout");
+        logoutBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutBarMouseClicked(evt);
+            }
+        });
+        logoutBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBarActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(logoutBar);
+
+        setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(ReportTab)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(ReportTab, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    public void fillTable() {
+        String[] header = {"Plan ID", "Username", "Model", "OS Type", "Memory Size", "Price", "Internet Qouta", "Cap Limit", "EXP Date", "City", "ABN", "NO. Employees", "Monthly Payment"};
+        DefaultTableModel model = new DefaultTableModel(header, 0);
+        planTable.setModel(model);
+        String text = (String) userCombo1.getSelectedItem();
+        String fields[] = text.split(":");
+        int id = Integer.parseInt(fields[1]);
+        User user = company.findUser(id);
+        for (MobilePlan plan : user.getPlans().values()) {
+            String[] row = new String[13];
+            row[0] = plan.getId() + "";
+            row[1] = plan.userName;
+            row[2] = plan.getHandsetModel();
+            row[3] = plan.handset.getType().toString();
+            row[4] = plan.handset.getMemorySize() + "";
+            row[5] = plan.handset.getPrice() + "";
+            row[6] = plan.internetQuota + "";
+            row[7] = plan.capLimit + "";
+            row[8] = plan.getExpiryDate().toString();
+            if (plan instanceof PersonalPlan) {
+                row[9] = ((PersonalPlan) plan).city;
+                row[10] = "N/A";
+                row[11] = "N/A";
+            } else {
+                row[9] = "N/A";
+                row[10] = ((BusinessPlan) plan).ABN + "";
+                row[11] = ((BusinessPlan) plan).numberOfEmployees + "";
+            }
+            row[12] = String.format("$%.2f", plan.calcPayment(10));
+            model.addRow(row);
+        }
+
+    }
+
+    private void logoutBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBarActionPerformed
+        // TODO add your handling code here:
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_logoutBarActionPerformed
+
+    public void fillCityTable(){
+        String[] header = new String[]{"City", "Monthly Payment"};
+        DefaultTableModel model = new DefaultTableModel(header, 0);
+        cityTable.setModel(model);
+        HashMap<String, Double> paymentPerCity = company.getTotalPaymentPerCity();
+        for (String city : paymentPerCity.keySet()) {
+            String[] row = new String[2];
+            row[0] = city;
+            row[1] = paymentPerCity.get(city) + "";
+            model.addRow(row);
+        }
+    }
+    public void fillTable2() {
+        ArrayList<User> usersCopy = company.shallowCopyUsers();
+
+        if (nameSortCheckBox.isSelected()) {
+            Collections.sort(usersCopy, new User());
+        }
+
+        if (monthlypaymentSortCheckBox.isSelected()) {
+            Collections.sort(usersCopy);
+        }
+        String[] header = {"User ID", "User name", "Monthly Payment"};
+        DefaultTableModel model = new DefaultTableModel(header, 0);
+        userTable.setModel(model);
+
+        for (User user : usersCopy) {
+            String[] row = new String[3];
+            row[0] = user.getID() + "";
+            row[1] = user.getName();
+            row[2] = String.format("$%.2f", user.calcTotalPayments(company.getFlatRate()));
+            model.addRow(row);
+        }
+    }
+    
+    public void fillModelPaymentTab(){
+        String[] header = new String[]{"Mobile Model", "Total Premium", "Average Premium"};
+        DefaultTableModel model = new DefaultTableModel(header, 0);
+        modelpayTable.setModel(model);
+        
+        for(String modelMobile: company.getTotalCountPerMobileModel().keySet()){
+            String[] row = new String[3];
+            double totalMonthly = company.getTotalPaymentPerMobileModel().get(modelMobile);
+            double averageMonthly = totalMonthly / company.getTotalCountPerMobileModel().get(modelMobile);
+            row[0] = modelMobile;
+            row[1] = String.format("$%.2f",totalMonthly);
+            row[2] = String.format("$%.2f", averageMonthly);
+            model.addRow(row);
+        }
+    }
+
+    public void fillTable1() {
+        String text = (String) userCombo1.getSelectedItem();
+        String fields1[] = text.split(":");
+        int id = Integer.parseInt(fields1[1]);
+        User user = company.findUser(id);
+        ArrayList<MobilePlan> plansCopy = user.shallowCopyPlans();
+
+        for (MobilePlan plan : user.getPlans().values()) {
+            //plansCopy.add(plan);
+            try {
+                if (!mobilemodelTextField.getText().isEmpty()) {
+                    plansCopy = MobilePlan.filterByMobileModel(plansCopy, mobilemodelTextField.getText());
+                }
+                if (!expTextField.getText().isEmpty()) {
+                    String[] fields = expTextField.getText().split("/");
+                    int year = Integer.parseInt(fields[0]);
+                    int month = Integer.parseInt(fields[1]);
+                    int day = Integer.parseInt(fields[2]);
+                    MyDate date = new MyDate(year, month, day);
+                    plansCopy = MobilePlan.filterByExpiryDate(plansCopy, date);
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e);
+            }
+            if (sortCheckBox.isSelected()) {
+                Collections.sort(plansCopy);
+            }
+
+        }
+
+        String[] header = {"Plan ID", "Username", "Model", "OS Type", "Memory Size", "Price", "Internet Qouta", "Cap Limit", "EXP Date", "City", "ABN", "NO. Employees", "Monthly Payment"};
+        DefaultTableModel model = new DefaultTableModel(header, 0);
+        planTable.setModel(model);
+
+        for (MobilePlan plan : plansCopy) {
+            String[] row = new String[13];
+            row[0] = plan.getId() + "";
+            row[1] = plan.userName;
+            row[2] = plan.getHandsetModel();
+            row[3] = plan.handset.getType().toString();
+            row[4] = plan.handset.getMemorySize() + "";
+            row[5] = plan.handset.getPrice() + "";
+            row[6] = plan.internetQuota + "";
+            row[7] = plan.capLimit + "";
+            row[8] = plan.getExpiryDate().toString();
+            if (plan instanceof PersonalPlan) {
+                row[9] = ((PersonalPlan) plan).city;
+                row[10] = "N/A";
+                row[11] = "N/A";
+            } else {
+                row[9] = "N/A";
+                row[10] = ((BusinessPlan) plan).ABN + "";
+                row[11] = ((BusinessPlan) plan).numberOfEmployees + "";
+            }
+            row[12] = String.format("$%.2f", plan.calcPayment(company.getFlatRate()));
+            model.addRow(row);
+        }
+    }
+
+    private void logoutBarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBarMouseClicked
+        // TODO add your handling code here:
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_logoutBarMouseClicked
+
+    private void ReportTabStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ReportTabStateChanged
+        // TODO add your handling code here:
+        osTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(MobileType.values()));
+        companyLabel.setText("Report For " + company.getName() + " Co.");
+        for (User user : company.getUsers().values()) {
+            userCombo.addItem(user.getName() + ":" + user.getUserID());
+            userCombo1.addItem(user.getName() + ":" + user.getUserID());
+        }
+    }//GEN-LAST:event_ReportTabStateChanged
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        // TODO add your handling code here:
+        clear();
+    }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void clearButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_clearButtonStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clearButtonStateChanged
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+            User user = company.findUser(Integer.parseInt(userIDText.getText()));
+            try {
+                int id = Integer.parseInt(planIDTextField.getText());
+                String username = usernameTextField.getText();
+                String model = modelTextField.getText();
+                MobileType type = (MobileType) osTypeComboBox.getSelectedItem();
+                int size = Integer.parseInt(memorySizeTextField.getText());
+                double price = Double.parseDouble(priceTextField.getText());
+                int quota = Integer.parseInt(internetQuotaTextField.getText());
+                int cap = Integer.parseInt(capLimitTextField.getText());
+                int day = Integer.parseInt(dayTextField.getText());
+                int month = Integer.parseInt(monthTextField.getText());
+                int year = Integer.parseInt(yearTextField.getText());
+                MyDate date = new MyDate(year, month, day);
+                MobilePhone phone = new MobilePhone(model, type, size, price);
+                MobilePlan plan;
+                if (personalPlanRadioButton.isSelected()) {
+                    String city = cityOrABNTextField.getText();
+                    plan = new PersonalPlan(username, id, phone, quota, cap, date, city);
+                } else {
+                    int abn = Integer.parseInt(cityOrABNTextField.getText());
+                    int numOfEmployee = Integer.parseInt(numOfEmployeesTextField.getText());
+                    plan = new BusinessPlan(username, id, phone, quota, cap, date, abn, numOfEmployee);
+                }
+                if (user.addPlan(plan)) {
+                    JOptionPane.showMessageDialog(this, "Plan has been added");
+                    clear();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Plan can not be added");
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Enter user ID first.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
+
+        public void clear() {
+        planIDTextField.setText("");
+        usernameTextField.setText("");
+        modelTextField.setText("");
+        memorySizeTextField.setText("");
+        priceTextField.setText("");
+        internetQuotaTextField.setText("");
+        capLimitTextField.setText("");
+        dayTextField.setText("");
+        monthTextField.setText("");
+        yearTextField.setText("");
+        cityOrABNTextField.setText("");
+        numOfEmployeesTextField.setText("");
+    }
+        
+    private void osTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_osTypeComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_osTypeComboBoxActionPerformed
+
+    private void planIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_planIDTextFieldActionPerformed
+
+    private void personalPlanRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_personalPlanRadioButtonStateChanged
+        // TODO add your handling code here:
+        if (personalPlanRadioButton.isSelected()) {
+            noEmployeesLabel.setVisible(false);
+            numOfEmployeesTextField.setVisible(false);
+            cityOrABNLabel.setText("City");
+        } else {
+            noEmployeesLabel.setVisible(true);
+            numOfEmployeesTextField.setVisible(true);
+            cityOrABNLabel.setText("ABN");
+        }
+    }//GEN-LAST:event_personalPlanRadioButtonStateChanged
+
+    private void modelpayTableAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_modelpayTableAncestorAdded
+        // TODO add your handling code here:
+        fillModelPaymentTab();
+    }//GEN-LAST:event_modelpayTableAncestorAdded
+
+    private void cityTableAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cityTableAncestorAdded
+        // TODO add your handling code here:
+        fillCityTable();
+    }//GEN-LAST:event_cityTableAncestorAdded
+
+    private void monthlypaymentSortCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthlypaymentSortCheckBoxActionPerformed
+        // TODO add your handling code here:
+        fillTable2();
+    }//GEN-LAST:event_monthlypaymentSortCheckBoxActionPerformed
+
+    private void nameSortCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameSortCheckBoxActionPerformed
+        // TODO add your handling code here:
+        fillTable2();
+    }//GEN-LAST:event_nameSortCheckBoxActionPerformed
+
+    private void userTableAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_userTableAncestorAdded
+        // TODO add your handling code here:
+        fillTable2();
+    }//GEN-LAST:event_userTableAncestorAdded
+
+    private void sortCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortCheckBoxActionPerformed
+        // TODO add your handling code here:
+        fillTable1();
+    }//GEN-LAST:event_sortCheckBoxActionPerformed
+
+    private void filterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterButtonActionPerformed
+        // TODO add your handling code here:
+        fillTable1();
+    }//GEN-LAST:event_filterButtonActionPerformed
+
+    private void expTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expTextFieldActionPerformed
+        // TODO add your handling code here:
+        fillTable1();
+    }//GEN-LAST:event_expTextFieldActionPerformed
+
+    private void mobilemodelTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_mobilemodelTextFieldKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mobilemodelTextFieldKeyTyped
+
+    private void mobilemodelTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_mobilemodelTextFieldKeyReleased
+        // TODO add your handling code here:
+        fillTable1();
+    }//GEN-LAST:event_mobilemodelTextFieldKeyReleased
+
+    private void mobilemodelTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mobilemodelTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mobilemodelTextFieldActionPerformed
+
+    private void userCombo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userCombo1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userCombo1ActionPerformed
+
+    private void userCombo1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_userCombo1ItemStateChanged
+        // TODO add your handling code here:
+        fillTable();
+    }//GEN-LAST:event_userCombo1ItemStateChanged
+
+    private void planTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_planTableMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_planTableMouseReleased
+
+    private void planTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_planTableMousePressed
+        // TODO add your handling code here:
+        //        Point point = evt.getPoint();
+        //        int rowSelected = infoTable.rowAtPoint(point);
+        //        infoTable.setRowSelectionInterval(rowSelected, rowSelected);
+    }//GEN-LAST:event_planTableMousePressed
+
+    private void planTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_planTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_planTableMouseClicked
+
+    private void planTableFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_planTableFocusGained
+        // TODO add your handling code here:
+        fillTable();
+    }//GEN-LAST:event_planTableFocusGained
+
+    private void planTableAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_planTableAncestorAdded
+        // TODO add your handling code here:
+        fillTable();
+    }//GEN-LAST:event_planTableAncestorAdded
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here
+        try {
+            int ind = planTable.getSelectedRow();
+            DefaultTableModel model = (DefaultTableModel) planTable.getModel();
+            String text = (String) userCombo1.getSelectedItem();
+            String fields[] = text.split(":");
+            int id = Integer.parseInt(fields[1]);
+            User user = company.findUser(id);
+            MobilePlan plan = user.findPlan(Integer.parseInt((String) model.getValueAt(ind, 0)));
+            if (ind >= 0) {
+                user.getPlans().remove(plan.getId());
+                fillTable();
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(this, "No plan has been selected yet.");
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteButtonMouseClicked
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+            int ind = planTable.getSelectedRow();
+            String text = (String) userCombo1.getSelectedItem();
+            String fields[] = text.split(":");
+            int id = Integer.parseInt(fields[1]);
+            User user = company.findUser(id);
+            DefaultTableModel model = (DefaultTableModel) planTable.getModel();
+            MobilePlan plan = user.findPlan(Integer.parseInt((String) model.getValueAt(ind, 0)));
+            if (ind >= 0) {
+                UpdateUI updateUI = new UpdateUI(plan, this);
+                updateUI.setVisible(true);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(this, "No plan has been selected yet.");
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void userComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_userComboItemStateChanged
+        // TODO add your handling code here:
+        String text = (String) userCombo.getSelectedItem();
+        String fields[] = text.split(":");
+        int id = Integer.parseInt(fields[1]);
+        userArea1.setText(company.findUser(id).toString());
+    }//GEN-LAST:event_userComboItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            int id = Integer.parseInt(userText.getText());
+            User user = company.findUser(id);
+            if (user != null) {
+                userArea.append(user.toString() + "\n");
+            } else {
+                userArea.append("User with id " + id + " is not exist.\n");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.toString());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void reportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportButtonActionPerformed
+        // TODO add your handling code here:
+        companyTextArea.setText(company.toString());
+    }//GEN-LAST:event_reportButtonActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AdminUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AdminUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AdminUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AdminUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+//                try {
+//                    try {
+//                        new AdminUI().setVisible(true);
+//                    } catch (PlanException ex) {
+//                        Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                } catch (IOException ex) {
+//                    Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (ClassNotFoundException ex) {
+//                    Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane ReportTab;
+    private javax.swing.JButton addButton;
+    private javax.swing.JRadioButton businessPlanRadioButton;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JTextField capLimitTextField;
+    private javax.swing.JLabel cityOrABNLabel;
+    private javax.swing.JTextField cityOrABNTextField;
+    private javax.swing.JTable cityTable;
+    private javax.swing.JButton clearButton;
+    private javax.swing.JLabel companyLabel;
+    private javax.swing.JTextArea companyTextArea;
+    private javax.swing.JLabel dayLabel;
+    private javax.swing.JTextField dayTextField;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JLabel expLabel;
+    private javax.swing.JTextField expTextField;
+    private javax.swing.JButton filterButton;
+    private javax.swing.JTextField internetQuotaTextField;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JMenu logoutBar;
+    private javax.swing.JTextField memorySizeTextField;
+    private javax.swing.JLabel mobilePhoneLabel;
+    private javax.swing.JTextField mobilemodelTextField;
+    private javax.swing.JLabel modelLabel;
+    private javax.swing.JTextField modelTextField;
+    private javax.swing.JTable modelpayTable;
+    private javax.swing.JTextField monthTextField;
+    private javax.swing.JCheckBox monthlypaymentSortCheckBox;
+    private javax.swing.JCheckBox nameSortCheckBox;
+    private javax.swing.JLabel noEmployeesLabel;
+    private javax.swing.JTextField numOfEmployeesTextField;
+    private javax.swing.JComboBox<String> osTypeComboBox;
+    private javax.swing.JLabel osTypeLabel;
+    private javax.swing.JRadioButton personalPlanRadioButton;
+    private javax.swing.JTextField planIDTextField;
+    private javax.swing.JLabel planIdLabel;
+    private javax.swing.JTable planTable;
+    private javax.swing.JTextField priceTextField;
+    private javax.swing.JButton reportButton;
+    private javax.swing.JCheckBox sortCheckBox;
+    private javax.swing.JButton updateButton;
+    private javax.swing.JTextArea userArea;
+    private javax.swing.JTextArea userArea1;
+    private javax.swing.JComboBox<String> userCombo;
+    private javax.swing.JComboBox<String> userCombo1;
+    private javax.swing.JTextField userIDText;
+    private javax.swing.JTable userTable;
+    private javax.swing.JTextField userText;
+    private javax.swing.JLabel usernameLabel;
+    private javax.swing.JTextField usernameTextField;
+    private javax.swing.JTextField yearTextField;
+    // End of variables declaration//GEN-END:variables
+
+}
